@@ -21,13 +21,13 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-//		GCMRegistrar.checkDevice(this);
+		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
 		final String regId = GCMRegistrar.getRegistrationId(this);
 		if (regId.equals("")) {
 		  GCMRegistrar.register(this, "772989319697");
 		} else {
-		  Log.v(TAG, "Already registered");
+		  Log.v(TAG, "Already registered "+regId);
 		}
 	}
 
