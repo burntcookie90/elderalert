@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 		        new NotificationCompat.Builder(this)
 		        .setSmallIcon(R.drawable.ic_launcher)
 		        .setContentTitle("Elder Alert")
-		        .setContentText("ALERT:Grandma");
+		        .setContentText("ElderAlert is running");
 		// Creates an explicit intent for an Activity in your app
 		Intent resultIntent = new Intent(this, MainActivity.class);
 
