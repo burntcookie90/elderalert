@@ -1,5 +1,8 @@
 package com.mas.elderalert;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,14 +11,24 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
-
-import com.google.android.gcm.GCMRegistrar;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.google.android.gcm.GCMRegistrar;
 
 public class MainActivity extends SherlockActivity {
 	public final String TAG = MainActivity.class.getSimpleName();
+	ListView list;
+	LazyAdapter adapter;
+	
+	  static final String KEY_SONG = "song"; // parent node
+	    static final String KEY_ID = "id";
+	    static final String KEY_TITLE = "title";
+	    static final String KEY_ARTIST = "artist";
+	    static final String KEY_DURATION = "duration";
+	    static final String KEY_THUMB_URL = "thumb_url";
+	    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,6 +42,27 @@ public class MainActivity extends SherlockActivity {
 		} else {
 		  Log.v(TAG, "Already registered "+regId);
 		}
+		
+		ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put(KEY_ID, "1");
+        map.put(KEY_TITLE,"Mother" );
+        map.put(KEY_ARTIST,"Status Normal" );
+        
+		map.put(KEY_ID, "2");
+        map.put(KEY_TITLE,"Uncle" );
+        map.put(KEY_ARTIST,"Status Normal" );
+//        map.put(KEY_DURATION, parser.getValue(e, KEY_DURATION));
+//        map.put(KEY_THUMB_URL, parser.getValue(e, KEY_THUMB_URL));
+        
+        songsList.add(map);
+        
+        list = (ListView) findViewById(R.id.list);
+        adapter=new LazyAdapter(this, songsList);
+        list.setAdapter(adapter);
+        
 	}
 
 	@Override
