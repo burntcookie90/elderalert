@@ -35,6 +35,15 @@ public class MainActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		GCMRegistrar.checkDevice(this);
+		GCMRegistrar.checkManifest(this);
+		final String regId = GCMRegistrar.getRegistrationId(this);
+		if (regId.equals("")) {
+			GCMRegistrar.register(this, "772989319697");
+//			Log.v(TAG,"Register " + GCMRegistrar.getRegistrationId(this));
+		} else {
+			Log.v(TAG, "Already registered "+regId);
+		}
 		setContentView(R.layout.activity_main);
 
 
@@ -53,12 +62,12 @@ public class MainActivity extends SherlockActivity {
 		map2.put(KEY_NAME,"Uncle" );
 		map2.put(KEY_STATUS,"Status Normal");
 		map2.put(KEY_COLOR,"reg");
-		
+
 		map3.put(KEY_ID,"3");
 		map3.put(KEY_NAME,"Grandpa");
 		map3.put(KEY_STATUS,"Status: Normal");
 		map3.put(KEY_COLOR,"reg");
-		
+
 		//        map.put(KEY_DURATION, parser.getValue(e, KEY_DURATION));
 		//        map.put(KEY_THUMB_URL, parser.getValue(e, KEY_THUMB_URL));
 
@@ -81,7 +90,7 @@ public class MainActivity extends SherlockActivity {
 			// Get extra data included in the Intent
 			String name = intent.getStringExtra("name");
 			String status = intent.getStringExtra("status");
-			
+
 			for(int i = 0;i<relativeList.size();i++){
 				if(relativeList.get(i).get("name").equals(name)){
 					Log.v(TAG,"FOUND RELATIVE");
@@ -96,12 +105,12 @@ public class MainActivity extends SherlockActivity {
 			Log.d("receiver", "Got message: " + name);
 		}
 	};
-	
+
 	@Override
 	protected void onDestroy() {
-	  // Unregister since the activity is about to be closed.
-	  LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-	  super.onDestroy();
+		// Unregister since the activity is about to be closed.
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+		super.onDestroy();
 	}
 
 	@Override
@@ -115,7 +124,9 @@ public class MainActivity extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
-//			startActivity(new Intent(this, GeneralPreferencesActivity.class));
+			//			startActivity(new Intent(this, GeneralPreferencesActivity.class));
+//			new PostGCMRegID(this).execute("test");
+			GCMRegistrar.unregister(this);
 			return true;
 		case R.id.menu_profile:
 			startActivity(new Intent(this,ProfileViewActivity.class));

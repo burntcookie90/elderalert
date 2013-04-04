@@ -27,16 +27,6 @@ public class StartActivity extends SherlockActivity {
 
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		GCMRegistrar.checkDevice(this);
-		GCMRegistrar.checkManifest(this);
-		final String regId = GCMRegistrar.getRegistrationId(this);
-//			GCMRegistrar.unregister(this);
-		if (regId.equals("")) {
-			GCMRegistrar.register(this, "772989319697");
-//			Log.v(TAG,"Register " + GCMRegistrar.getRegistrationId(this));
-		} else {
-			Log.v(TAG, "Already registered "+regId);
-		}
 	}
 	
 	@Override

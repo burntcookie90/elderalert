@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.mas.elderalert.AeSimpleSHA1;
 import com.mas.elderalert.Constants;
 import com.mas.elderalert.MainActivity;
@@ -35,7 +36,7 @@ import com.mas.elderalert.R;
  *
  */
 public class LoginActivity extends AccountAuthenticatorActivity implements OnClickListener{
-	private static final String TAG = "Roaming Recruiter " +LoginActivity.class.getSimpleName();                                                                                                                  
+	private static final String TAG = LoginActivity.class.getSimpleName();                                                                                                                  
 	public static final String PARAM_AUTHTOKEN_TYPE = Constants.ACCOUNT_TYPE;
 	public static final String PARAM_CREATE = "create";
 	public static final int REQ_CODE_CREATE = 1;
@@ -168,7 +169,10 @@ public class LoginActivity extends AccountAuthenticatorActivity implements OnCli
 			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accountType);
 			intent.putExtra(AccountManager.KEY_AUTHTOKEN, accountType);
 			try {
-				intent.putExtra(AccountManager.KEY_USERDATA,responseObject.getString(Constants.USER_ID));
+				Log.v(TAG,"ID: " + responseObject.getJSONObject(Constants.USER_ID).getString("$oid"));
+				String id = responseObject.getJSONObject(Constants.USER_ID).getString("$oid");
+//				intent.putExtra(AccountManager.KEY_USERDATA,id);
+				accMgr.setUserData(account, AccountManager.KEY_USERDATA, id);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
