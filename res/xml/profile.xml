@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:enabled="false"
+        android:key="pref_profile_username"
+        android:selectable="false"
+        android:title="@string/username" />
+
+    <PreferenceCategory
+        android:enabled="true"
+        android:key="pref_cat_personal"
+        android:selectable="true"
+        android:title="@string/tab_p_info" >
+        <EditTextPreference
+            android:enabled="true"
+            android:key="pref_f_name"
+            android:selectable="true"
+            android:title="@string/first_name" />
+        <EditTextPreference
+            android:enabled="true"
+            android:key="pref_m_name"
+            android:selectable="true"
+            android:title="@string/middle_name" />
+        <EditTextPreference
+            android:enabled="true"
+            android:key="pref_l_name"
+            android:selectable="true"
+            android:title="@string/last_name" />
+        <EditTextPreference
+            android:enabled="true"
+            android:key="pref_email_addr"
+            android:selectable="true"
+            android:title="@string/email_address"
+            android:inputType="textEmailAddress" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

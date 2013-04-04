@@ -16,6 +16,7 @@ public class Constants {
 	public static final String MIDDLE_NAME = "m_name";
 	public static final String LAST_NAME = "l_name";
 	public static final String EMAIL_ADDRESS = "email_addr";
+	public static final String USER_ID = "_id";
 	public Constants() {
 		// TODO Auto-generated constructor stub
 	}

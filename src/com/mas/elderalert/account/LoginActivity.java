@@ -4,14 +4,27 @@
 package com.mas.elderalert.account;
 
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.mas.elderalert.AeSimpleSHA1;
 import com.mas.elderalert.Constants;
 import com.mas.elderalert.MainActivity;
 import com.mas.elderalert.R;
@@ -34,6 +47,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements OnCli
 	private boolean hasErrors;
 	private EditText username;
 	private EditText password;
+	private JSONObject responseObject;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +70,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements OnCli
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(LoginActivity.this, MainActivity.class);
+				Intent i = new Intent(LoginActivity.this, CreateAccountActivity.class);
 				startActivity(i);
 				LoginActivity.this.finish();
 
@@ -65,7 +79,6 @@ public class LoginActivity extends AccountAuthenticatorActivity implements OnCli
 	}
 //	@Override
 	public void onClick(View v) {
-	/**	// TODO Auto-generated method stub
 		String loginUsername = username.getText().toString();
 		String loginPassword = null;
 
@@ -87,7 +100,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements OnCli
 			int responseLength = o.length();
 			Log.v(TAG,""+responseLength);
 
-			JSONObject responseObject = o.getJSONObject(0);
+			responseObject = o.getJSONObject(0);
 			Log.v(TAG,responseObject.toString(1));
 
 			if(responseObject.getString(Constants.USERNAME).equals(loginUsername)){
@@ -154,17 +167,21 @@ public class LoginActivity extends AccountAuthenticatorActivity implements OnCli
 			intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, loginUsername);
 			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accountType);
 			intent.putExtra(AccountManager.KEY_AUTHTOKEN, accountType);
+			try {
+				intent.putExtra(AccountManager.KEY_USERDATA,responseObject.getString(Constants.USER_ID));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.setAccountAuthenticatorResult(intent.getExtras());
 			this.setResult(RESULT_OK, intent);
 
-			Intent mapIntent = new Intent(LoginActivity.this,JobMapActivity.class);
+			Intent mapIntent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(mapIntent);
 
 			this.finish();
 
 		}
-
-*/
 	}
 
 	@Override

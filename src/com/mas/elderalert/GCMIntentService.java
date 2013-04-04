@@ -1,5 +1,9 @@
 package com.mas.elderalert;
 
+import com.mas.elderalert.R;
+import com.mas.elderalert.R.drawable;
+import com.mas.elderalert.gcm.PostGCMRegID;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -76,14 +80,17 @@ public class GCMIntentService extends com.google.android.gcm.GCMBaseIntentServic
 	@Override
 	protected void onRegistered(Context arg0, String arg1) {
 		// TODO Auto-generated method stub
-		Log.i(TAG, "Device registered: regId = " + arg1);
+		Log.v(TAG, "Device registered: regId = " + arg1);
 		Toast.makeText(arg0, "Your device registred with GCM",Toast.LENGTH_SHORT).show();
+		
+		new PostGCMRegID(arg0).execute(arg1);
 
 	}
 
 	@Override
 	protected void onUnregistered(Context arg0, String arg1) {
 		// TODO Auto-generated method stub
+		Log.v(TAG, "Device unregistered");
 
 	}
 

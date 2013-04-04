@@ -14,7 +14,9 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gcm.GCMRegistrar;
+import com.mas.elderalert.profile.ProfileViewActivity;
 
 public class MainActivity extends SherlockActivity {
 	public final String TAG = MainActivity.class.getSimpleName();
@@ -23,6 +25,7 @@ public class MainActivity extends SherlockActivity {
 	private HashMap<String, String> map;
 	private HashMap<String, String> map2;
 	private ArrayList<HashMap<String, String>> relativeList;
+	private HashMap<String, String> map3;
 
 	static final String KEY_ID = "id";
 	static final String KEY_NAME = "name";
@@ -34,19 +37,12 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		GCMRegistrar.checkDevice(this);
-		GCMRegistrar.checkManifest(this);
-		final String regId = GCMRegistrar.getRegistrationId(this);
-		if (regId.equals("")) {
-			GCMRegistrar.register(this, "772989319697");
-		} else {
-			Log.v(TAG, "Already registered "+regId);
-		}
 
 		relativeList = new ArrayList<HashMap<String, String>>();
 
 		map = new HashMap<String, String>();
 		map2 = new HashMap<String, String>();
+		map3 = new HashMap<String, String>();
 
 		map.put(KEY_ID, "1");
 		map.put(KEY_NAME,"Mother");
@@ -58,11 +54,17 @@ public class MainActivity extends SherlockActivity {
 		map2.put(KEY_STATUS,"Status Normal");
 		map2.put(KEY_COLOR,"reg");
 		
+		map3.put(KEY_ID,"3");
+		map3.put(KEY_NAME,"Grandpa");
+		map3.put(KEY_STATUS,"Status: Normal");
+		map3.put(KEY_COLOR,"reg");
+		
 		//        map.put(KEY_DURATION, parser.getValue(e, KEY_DURATION));
 		//        map.put(KEY_THUMB_URL, parser.getValue(e, KEY_THUMB_URL));
 
 		relativeList.add(map);
 		relativeList.add(map2);
+		relativeList.add(map3);
 
 		list = (ListView) findViewById(R.id.list);
 		adapter=new LazyAdapter(this, relativeList);
@@ -109,6 +111,18 @@ public class MainActivity extends SherlockActivity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+//			startActivity(new Intent(this, GeneralPreferencesActivity.class));
+			return true;
+		case R.id.menu_profile:
+			startActivity(new Intent(this,ProfileViewActivity.class));
+			return true;
+		}
+		return false;
+	}
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
