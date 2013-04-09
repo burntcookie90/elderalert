@@ -57,8 +57,12 @@ public class PostGCMRegID extends AsyncTask<String, Void, String> {
 			_id.put("$oid", id);
 			
 			JSONObject updateJSON = new JSONObject();
-			updateJSON.put("_id", _id);
-			updateJSON.put("gcm_reg_id",params[0]);
+//			updateJSON.put("_id", _id);
+			
+			JSONObject setJSON = new JSONObject();
+			setJSON.put(Constants.GCM_ID,params[0]);
+			updateJSON.put("$set",setJSON);
+			System.out.println(updateJSON.toString());
 			
 			String requestUrl = "https://api.mongolab.com/api/1/databases/elderalert/collections/users-relatives?";
 			ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();

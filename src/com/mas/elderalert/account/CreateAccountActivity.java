@@ -123,6 +123,7 @@ public class CreateAccountActivity extends SherlockFragmentActivity implements T
 								 user.put(Constants.MIDDLE_NAME,mNameInput);
 								 user.put(Constants.LAST_NAME,lNameInput);
 								 user.put(Constants.EMAIL_ADDRESS,emailAddress);
+								 user.put(Constants.GCM_ID, "");
 							 } catch (JSONException e){
 								 e.printStackTrace();
 							 }
